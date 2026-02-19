@@ -54,7 +54,12 @@ let%test "test_values" =
     assert (Data.to_int_exn (column select_stmt 1) = 1);
     assert (Data.to_int64_exn (column select_stmt 2) = Int64.max_int);
     assert (Data.to_float_exn (column select_stmt 3) = test_float_val);
-    assert (Data.to_bool_exn (column select_stmt 4) = true));
+    assert (Data.to_bool_exn (column select_stmt 4) = true);
+    assert (not (column_is_null select_stmt 0));
+    assert (not (column_is_null select_stmt 1));
+    assert (not (column_is_null select_stmt 2));
+    assert (not (column_is_null select_stmt 3));
+    assert (not (column_is_null select_stmt 4)));
 
   (* Fetch data back with nulls *)
   ignore (reset select_stmt);
@@ -66,6 +71,10 @@ let%test "test_values" =
     assert (column_int64 select_stmt 2 = 0L);
     assert (column_double select_stmt 3 = 0.0);
     assert (column_bool select_stmt 4 = false);
+    assert (column_is_null select_stmt 0);
+    assert (column_is_null select_stmt 1);
+    assert (column_is_null select_stmt 2);
+    assert (column_is_null select_stmt 3);
     assert (column_is_null select_stmt 4));
 
   (* Clean up *)
