@@ -1137,6 +1137,18 @@ CAMLprim value caml_sqlite3_column_count_bc(value v_stmt) {
   return Val_int(caml_sqlite3_column_count(v_stmt));
 }
 
+/* column_is_null */
+
+CAMLprim value caml_sqlite3_column_is_null(value v_stmt, intnat pos) {
+  sqlite3_stmt *stmt = safe_get_stmtw("column_is_null", v_stmt)->stmt;
+  range_check(pos, sqlite3_column_count(stmt));
+  return Val_bool(sqlite3_column_type(stmt, pos) == SQLITE_NULL);
+}
+
+CAMLprim value caml_sqlite3_column_is_null_bc(value v_stmt, value v_pos) {
+  return caml_sqlite3_column_is_null(v_stmt, Int_val(v_pos));
+}
+
 /* column_blob */
 
 CAMLprim value caml_sqlite3_column_blob(value v_stmt, intnat pos) {

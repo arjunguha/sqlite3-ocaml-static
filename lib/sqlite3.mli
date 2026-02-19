@@ -495,6 +495,15 @@ val column_count : stmt -> int
 
     @raise SqliteError if the statement is invalid. *)
 
+val column_is_null : stmt -> int -> bool
+(** [column_is_null stmt n]
+    @return
+      [true] if the data in column [n] of the result of the last step of
+      statement [stmt] is NULL, [false] otherwise.
+
+    @raise RangeError if [n] is out of range.
+    @raise SqliteError if the statement is invalid. *)
+
 val column : stmt -> int -> Data.t
 (** [column stmt n]
     @return

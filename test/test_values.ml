@@ -65,7 +65,8 @@ let%test "test_values" =
     assert (column_int32 select_stmt 1 = 0l);
     assert (column_int64 select_stmt 2 = 0L);
     assert (column_double select_stmt 3 = 0.0);
-    assert (column_bool select_stmt 4 = false));
+    assert (column_bool select_stmt 4 = false);
+    assert (column_is_null select_stmt 4));
 
   (* Clean up *)
   ignore (finalize insert_stmt);

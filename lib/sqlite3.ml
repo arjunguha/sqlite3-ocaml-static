@@ -343,6 +343,9 @@ external data_count : stmt -> (int[@untagged])
 external column_count : stmt -> (int[@untagged])
   = "caml_sqlite3_column_count_bc" "caml_sqlite3_column_count"
 
+external column_is_null : stmt -> (int[@untagged]) -> bool
+  = "caml_sqlite3_column_is_null_bc" "caml_sqlite3_column_is_null"
+
 external column_blob : stmt -> (int[@untagged]) -> string
   = "caml_sqlite3_column_blob_bc" "caml_sqlite3_column_blob"
 
