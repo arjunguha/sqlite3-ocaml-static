@@ -1,11 +1,20 @@
 # Changelog
 
-## [Unreleased]
+## [5.4.0] - 2026-02-19
 
 ### Added
 
-- Makefile target to generate `compile_commands.json` for improved LSP support
-  in editors.
+- `column_is_null` function in the low-level column API. Thanks to Alexander
+  Keleshev for the contribution.
+- Makefile support for generating `compile_commands.json` and improved
+  generation for better LSP support in editors.
+
+### Changed
+
+- Updated GitHub Actions `actions/checkout` from version 4 to version 6.
+- Bumped `ocamlformat` version.
+- Strengthened tests for `column_is_null` to cover both NULL and non-NULL
+  values.
 
 ## [5.3.1] - 2025-03-07
 
