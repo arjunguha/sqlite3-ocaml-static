@@ -30,5 +30,4 @@
   dune-configurator
   (conf-sqlite3 :build)
   (ppx_inline_test :with-test))
- (tags
-  (clib:sqlite3 clib:pthread)))
+ (tags (clib:sqlite3)))

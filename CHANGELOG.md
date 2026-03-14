@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unreleased]
+
+### Changed
+
+- Removed the `clib:pthread` OPAM tag, keeping only `clib:sqlite3` as package
+  classification metadata.
+
 ## [5.4.0] - 2026-02-19
 
 ### Added
