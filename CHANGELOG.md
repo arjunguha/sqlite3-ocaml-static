@@ -1,11 +1,21 @@
 # Changelog
 
-## [Unreleased]
+## [5.4.1] - 2026-04-16
+
+### Added
+
+- Added a child-process regression test covering the `exec` callback and
+  concurrent statement preparation/finalization on a shared `FULLMUTEX`
+  connection.
 
 ### Changed
 
 - Removed the `clib:pthread` OPAM tag, keeping only `clib:sqlite3` as package
   classification metadata.
+- Bumped `ocamlformat` to version `0.29.0`.
+
+### Fixed
+
 - Released the OCaml runtime lock around more explicit SQLite API calls that can
   contend on SQLite connection or statement mutexes, reducing the risk of
   deadlocks in multi-threaded code.
