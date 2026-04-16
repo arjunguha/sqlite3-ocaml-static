@@ -308,9 +308,10 @@ val db_open :
     [SQLITE_OPEN_MEMORY] in the SQLite3 API. [mutex] determines how the database
     is accessed. The mutex parameters [`NO] and [`FULL] correspond to
     [SQLITE_OPEN_NOMUTEX] and [SQLITE_OPEN_FULLMUTEX] in the SQLite3 API
-    respectively. The cache parameters [`SHARED] and [`PRIVATE] correspond to
-    [SQLITE_OPEN_SHAREDCACHE] and [SQLITE_OPEN_PRIVATECACHE] in the SQLite3 API
-    respectively.
+    respectively. If a database handle is shared across OCaml threads, prefer
+    [`FULL] so that SQLite serializes access to the connection. The cache
+    parameters [`SHARED] and [`PRIVATE] correspond to [SQLITE_OPEN_SHAREDCACHE]
+    and [SQLITE_OPEN_PRIVATECACHE] in the SQLite3 API respectively.
 
     @param mode default = read-write, create
     @param uri default = false

@@ -6,6 +6,9 @@
 
 - Removed the `clib:pthread` OPAM tag, keeping only `clib:sqlite3` as package
   classification metadata.
+- Released the OCaml runtime lock around more explicit SQLite API calls that can
+  contend on SQLite connection or statement mutexes, reducing the risk of
+  deadlocks in multi-threaded code.
 
 ## [5.4.0] - 2026-02-19
 
