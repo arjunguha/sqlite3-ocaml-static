@@ -1,15 +1,30 @@
 (library
- (public_name sqlite3)
+ (name sqlite3)
+ (public_name sqlite3-static-link.sqlite3)
  (foreign_stubs
   (language c)
-  (names sqlite3_stubs)
+  (names sqlite3_stubs sqlite3)
   (flags
    (:standard)
-   (:include c_flags.sexp)))
- (c_library_flags
-  (:include c_library_flags.sexp)))
+   -DSQLITE_THREADSAFE=1
+   -DSQLITE_ENABLE_FTS5
+   -DSQLITE_ENABLE_RTREE
+   -DSQLITE3_DISABLE_LOADABLE_EXTENSIONS))
+ (c_library_flags -lpthread -lm))
 
 (rule
- (targets c_flags.sexp c_library_flags.sexp)
+ (targets sqlite3.c sqlite3.h sqlite3ext.h)
+ (deps (source_tree ../vendor/sqlite))
  (action
-  (run ./config/discover.exe)))
+  (bash
+   "set -eu; \
+    rm -rf sqlite-amalgamation-build; \
+    mkdir sqlite-amalgamation-build; \
+    cp -r ../vendor/sqlite/. sqlite-amalgamation-build/; \
+    (cd sqlite-amalgamation-build && \
+     ./configure --quiet >/dev/null 2>&1 && \
+     make -s sqlite3.c sqlite3.h sqlite3ext.h >/dev/null 2>&1); \
+    cp sqlite-amalgamation-build/sqlite3.c \
+       sqlite-amalgamation-build/sqlite3.h \
+       sqlite-amalgamation-build/sqlite3ext.h .; \
+    rm -rf sqlite-amalgamation-build")))

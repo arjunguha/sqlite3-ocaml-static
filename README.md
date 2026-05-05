@@ -23,39 +23,24 @@ The `test`-directory in this distribution contains simple examples for
 testing features of this library. You can execute the tests by running:
 `dune runtest`.
 
-### Build issues
+### SQLite source
 
-SQLite3-OCaml depends on `pkg-config` to locate and compile against an
-[SQLite3](http://www.sqlite.org) library.
+The SQLite C source is consumed via a git submodule pinned to a specific
+upstream tag (`vendor/sqlite`, currently `version-3.47.2`). Initialize it
+after cloning:
 
-If the SQLite3 version is greater than or equal to 3.3.7, the assumption is that
-it supports [Run-Time Loadable Extensions](http://www.sqlite.org/loadext.html).
-If this feature has been explicitly disabled in the library, building
-applications will fail with something like:
-
-```text
-Undefined symbols for architecture …:
-  "_sqlite3_enable_load_extension", referenced from:
-      _caml_sqlite3_enable_load_extension in libsqlite3_stubs.a(sqlite3_stubs.o)
+```sh
+git submodule update --init --recursive
 ```
 
-- You can check if your library is missing loadable extensions by searching
-  it for the string `OMIT_LOAD_EXTENSION`.
+The amalgamation (`sqlite3.c`, `sqlite3.h`, `sqlite3ext.h`) is generated at
+build time from the submodule. This requires `tclsh` and a working C
+toolchain on the build host. The resulting object is statically linked into
+the OCaml library, so loadable extensions are disabled
+(`SQLITE3_DISABLE_LOADABLE_EXTENSIONS`).
 
-- If you need to change where `pkg-config` will look for the SQLite3
-  library, set the `PKG_CONFIG_PATH` environment variable to the new
-  directory. Setting the `SQLITE3_OCAML_BREWCHECK` environment variable
-  automates this. This will instruct the build to check for the installation
-  of a _brewed_ version of SQLite and route `pkg-config` appropriately.
-
-- You can explicitly disable run-time loadable extensions by calling
-  `configure` with the flag `--disable-loadable-extensions` or by setting
-  the environment variable `SQLITE3_DISABLE_LOADABLE_EXTENSIONS` if linking
-  problems persist.
-
-- Due to frequent installation issues with loadable extensions on Mac OS X,
-  the default there is to disable them. You will have to explicitly enable
-  them on that platform.
+To bump SQLite, check out a different tag in `vendor/sqlite` and commit the
+submodule pointer.
 
 ## Credits
 

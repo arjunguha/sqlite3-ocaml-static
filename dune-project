@@ -1,8 +1,8 @@
 (lang dune 2.7)
 
-(name sqlite3)
+(name sqlite3-static-link)
 
-(generate_opam_files true)
+(generate_opam_files false)
 
 (source
  (github mmottl/sqlite3-ocaml))
@@ -19,15 +19,13 @@
   "Christian Szegedy <csdontspam@metamatix.com>")
 
 (package
- (name sqlite3)
- (synopsis "SQLite3 bindings for OCaml")
+ (name sqlite3-static-link)
+ (synopsis "SQLite3 bindings for OCaml (statically linked)")
  (description
-   "sqlite3-ocaml is an OCaml library with bindings to the SQLite3 client API.\nSqlite3 is a self-contained, serverless, zero-configuration, transactional SQL\ndatabase engine with outstanding performance for many use cases.")
+   "Drop-in replacement for the [sqlite3] opam package that statically links the SQLite amalgamation. The amalgamation is generated at build time from the upstream sqlite/sqlite git submodule pinned to a specific release tag (requires tclsh on the build host). The OCaml interface is unchanged: client code still does [open Sqlite3] / [(libraries sqlite3)].")
  (depends
   (ocaml
    (>= 4.12))
-  dune-compiledb
-  dune-configurator
-  (conf-sqlite3 :build)
   (ppx_inline_test :with-test))
+ (conflicts sqlite3)
  (tags (clib:sqlite3)))
