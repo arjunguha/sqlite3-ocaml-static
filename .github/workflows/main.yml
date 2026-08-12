@@ -34,6 +34,24 @@ jobs:
 
       - run: opam exec -- dune runtest
 
+  integration-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout tree
+        uses: actions/checkout@v6
+        with:
+          submodules: recursive
+
+      - name: Set-up OCaml
+        uses: ocaml/setup-ocaml@v3
+        with:
+          ocaml-compiler: 5
+
+      - run: opam install . --deps-only --with-test
+
+      - name: Verify (libraries sqlite3) still resolves after the opam swap
+        run: opam exec -- bash integration/run.sh
+
   lint-doc:
     runs-on: ubuntu-latest
     steps:
