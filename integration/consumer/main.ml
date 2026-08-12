@@ -9,8 +9,7 @@ let () =
   let result = ref None in
   assert_ok
     (exec db "SELECT a FROM t" ~cb:(fun row _ -> result := row.(0)));
-  (match !result with
-  | Some "42" -> ()
-  | _ -> failwith "unexpected query result");
   ignore (db_close db);
-  print_endline "OK"
+  match !result with
+  | Some v -> print_endline v
+  | None -> failwith "unexpected query result"

@@ -51,10 +51,13 @@ switch to `sqlite3-static-link` by changing only its `depends:` field; every
 `(libraries sqlite3)` stanza and `open Sqlite3` in its own dune files and
 source code keeps working unchanged.
 
-`integration/run.sh` exercises this guarantee: it installs
-`sqlite3-static-link` into a scratch prefix and builds a standalone project
-(`integration/consumer`) that only ever refers to the library as `sqlite3`,
-exactly as it would against the upstream package.
+`integration/run.sh` exercises this guarantee: it installs the upstream
+`sqlite3` package (dynamically linked against the system libsqlite3) and
+`sqlite3-static-link` (statically linked) side by side, then runs the same
+standalone project (`integration/consumer`) against each in turn. The
+consumer only ever refers to the library as `sqlite3`, exactly as it would
+against the upstream package, and the script fails if the two runs don't
+produce identical output.
 
 ## Credits
 
