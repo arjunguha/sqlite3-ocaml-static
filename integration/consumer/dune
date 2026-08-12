@@ -1,0 +1,7 @@
+; This project mimics a downstream consumer that depends on the ordinary
+; upstream "sqlite3" opam package: it only ever refers to the library as
+; "sqlite3", exactly as it would if it depended on the upstream package
+; instead of "sqlite3-static-link".
+(executable
+ (name main)
+ (libraries sqlite3))

@@ -1,3 +1,12 @@
+; integration/consumer is a standalone project (its own dune-project) used
+; only by integration/run.sh, which builds it via `dune build --root`
+; against an installed copy of this package. Exclude it here so that a
+; plain `dune build`/`dune runtest` from this root doesn't also try to
+; build it in-tree, where the "sqlite3" library it depends on isn't
+; installed.
+
+(dirs :standard \ integration)
+
 (env
  (dev
   (flags

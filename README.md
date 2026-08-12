@@ -42,6 +42,23 @@ the OCaml library, so loadable extensions are disabled
 To bump SQLite, check out a different tag in `vendor/sqlite` and commit the
 submodule pointer.
 
+### Drop-in replacement for the `sqlite3` opam package
+
+The opam package is named `sqlite3-static-link` (and conflicts with
+`sqlite3`), but the OCaml library it installs is still named `sqlite3`. A
+project that currently depends on the upstream `sqlite3` opam package can
+switch to `sqlite3-static-link` by changing only its `depends:` field; every
+`(libraries sqlite3)` stanza and `open Sqlite3` in its own dune files and
+source code keeps working unchanged.
+
+`integration/run.sh` exercises this guarantee: it installs the upstream
+`sqlite3` package (dynamically linked against the system libsqlite3) and
+`sqlite3-static-link` (statically linked) side by side, then runs the same
+standalone project (`integration/consumer`) against each in turn. The
+consumer only ever refers to the library as `sqlite3`, exactly as it would
+against the upstream package, and the script fails if the two runs don't
+produce identical output.
+
 ## Credits
 
 - Mikhail Fedotov wrote ocaml-sqlite for SQLite version 2. His bindings

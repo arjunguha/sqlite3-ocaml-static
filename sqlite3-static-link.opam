@@ -13,7 +13,7 @@ homepage: "https://mmottl.github.io/sqlite3-ocaml"
 doc: "https://mmottl.github.io/sqlite3-ocaml/api"
 bug-reports: "https://github.com/mmottl/sqlite3-ocaml/issues"
 depends: [
-  "dune" {>= "2.7"}
+  "dune" {>= "2.8"}
   "ocaml" {>= "4.12"}
   "ppx_inline_test" {with-test}
   "odoc" {with-doc}

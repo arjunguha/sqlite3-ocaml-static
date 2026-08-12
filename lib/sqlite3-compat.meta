@@ -1,0 +1,6 @@
+directory = "../sqlite3-static-link/sqlite3"
+requires = ""
+archive(byte) = "sqlite3.cma"
+archive(native) = "sqlite3.cmxa"
+plugin(byte) = "sqlite3.cma"
+plugin(native) = "sqlite3.cmxs"

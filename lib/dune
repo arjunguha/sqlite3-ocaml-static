@@ -12,19 +12,25 @@
    -DSQLITE3_DISABLE_LOADABLE_EXTENSIONS))
  (c_library_flags -lpthread -lm))
 
+; Install the compiled library a second time under the plain findlib name
+; "sqlite3" (rather than the namespaced "sqlite3-static-link.sqlite3") via a
+; META redirect. Dune requires a library's public_name to be prefixed by its
+; owning package's name, so the real build lives under the
+; "sqlite3-static-link" package; this redirect is what lets a project depend
+; on the "sqlite3-static-link" opam package while keeping
+; `(libraries sqlite3)` unchanged in its own dune files, exactly like a
+; project depending on the upstream "sqlite3" opam package would write.
+
+(install
+ (section lib_root)
+ (package sqlite3-static-link)
+ (files
+  (sqlite3-compat.meta as sqlite3/META)))
+
 (rule
  (targets sqlite3.c sqlite3.h sqlite3ext.h)
- (deps (source_tree ../vendor/sqlite))
+ (deps
+  (source_tree ../vendor/sqlite))
  (action
   (bash
-   "set -eu; \
-    rm -rf sqlite-amalgamation-build; \
-    mkdir sqlite-amalgamation-build; \
-    cp -r ../vendor/sqlite/. sqlite-amalgamation-build/; \
-    (cd sqlite-amalgamation-build && \
-     ./configure --quiet >/dev/null 2>&1 && \
-     make -s sqlite3.c sqlite3.h sqlite3ext.h >/dev/null 2>&1); \
-    cp sqlite-amalgamation-build/sqlite3.c \
-       sqlite-amalgamation-build/sqlite3.h \
-       sqlite-amalgamation-build/sqlite3ext.h .; \
-    rm -rf sqlite-amalgamation-build")))
+   "set -eu; rm -rf sqlite-amalgamation-build; mkdir sqlite-amalgamation-build; cp -r ../vendor/sqlite/. sqlite-amalgamation-build/; (cd sqlite-amalgamation-build && ./configure --quiet >/dev/null 2>&1 && make -s sqlite3.c sqlite3.h sqlite3ext.h >/dev/null 2>&1); cp sqlite-amalgamation-build/sqlite3.c sqlite-amalgamation-build/sqlite3.h sqlite-amalgamation-build/sqlite3ext.h .; rm -rf sqlite-amalgamation-build")))

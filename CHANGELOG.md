@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- The `sqlite3-static-link` package now installs its library under the
+  plain findlib name `sqlite3` (via a META redirect), instead of the
+  namespaced `sqlite3-static-link.sqlite3`. Projects depending on the
+  upstream `sqlite3` opam package can now switch to `sqlite3-static-link`
+  by changing only their opam dependency, without touching any
+  `(libraries sqlite3)` stanza. Added `integration/` as an integration test
+  covering this.
+
 ## [5.4.1] - 2026-04-16
 
 ### Added
