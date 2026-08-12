@@ -205,19 +205,19 @@ module Data : sig
   (** [to_int_exn data] converts [INT] [data] to an int.
 
       @raise DataTypeError if [data] is invalid.
-      @raise Failure if the integer conversion over- or underflows. *)
+      Raises [Failure] if the integer conversion over- or underflows. *)
 
   val to_nativeint_exn : t -> nativeint
   (** [to_nativeint_exn data] converts [INT] [data] to a nativeint.
 
       @raise DataTypeError if [data] is invalid.
-      @raise Failure if the integer conversion over- or underflows. *)
+      Raises [Failure] if the integer conversion over- or underflows. *)
 
   val to_int32_exn : t -> int32
   (** [to_int32_exn data] converts [INT] [data] to an int32.
 
       @raise DataTypeError if [data] is invalid.
-      @raise Failure if the integer conversion over- or underflows. *)
+      Raises [Failure] if the integer conversion over- or underflows. *)
 
   val to_int64_exn : t -> int64
   (** [to_int64_exn data] converts [INT] [data] to an int64.
@@ -243,19 +243,19 @@ module Data : sig
   (** [to_int data] converts [data] to [Some int] or [None] if it is not a valid
       conversion.
 
-      @raise Failure if the integer conversion over- or underflows. *)
+      Raises [Failure] if the integer conversion over- or underflows. *)
 
   val to_nativeint : t -> nativeint option
   (** [to_nativeint data] converts [data] to [Some nativeint] or [None] if it is
       not a valid conversion.
 
-      @raise Failure if the integer conversion over- or underflows. *)
+      Raises [Failure] if the integer conversion over- or underflows. *)
 
   val to_int32 : t -> int32 option
   (** [to_int32 data] converts [data] to [Some int32] or [None] if it is not a
       valid conversion.
 
-      @raise Failure if the integer conversion over- or underflows. *)
+      Raises [Failure] if the integer conversion over- or underflows. *)
 
   val to_int64 : t -> int64 option
   (** [to_int64 data] converts [data] to [Some int64] or [None] if it is not a
@@ -333,7 +333,8 @@ val ( let& ) : db -> (db -> 'a) -> 'a
     database [db] is safely closed at the end of the scope, even if there is an
     exception somewhere in the scope.
 
-    @raise Fun.Finally_raised if the database could not be closed successfully.
+    Raises [Fun.Finally_raised] if the database could not be closed
+    successfully.
 *)
 
 val enable_load_extension : db -> bool -> bool
@@ -538,7 +539,7 @@ val column_int : stmt -> int -> int
       as an [int].
 
     @raise RangeError if [n] is out of range.
-    @raise Failure if the integer conversion over- or underflows.
+    Raises [Failure] if the integer conversion over- or underflows.
     @raise SqliteError if the statement is invalid. *)
 
 val column_nativeint : stmt -> int -> nativeint
@@ -548,7 +549,7 @@ val column_nativeint : stmt -> int -> nativeint
       as a [nativeint].
 
     @raise RangeError if [n] is out of range.
-    @raise Failure if the integer conversion over- or underflows.
+    Raises [Failure] if the integer conversion over- or underflows.
     @raise SqliteError if the statement is invalid. *)
 
 val column_int32 : stmt -> int -> int32
@@ -711,7 +712,7 @@ val bind_name : stmt -> string -> Data.t -> Rc.t
 
     @return the return code of this operation.
 
-    @raise Not_found if [name] does not exist.
+    Raises [Not_found] if [name] does not exist.
     @raise SqliteError if the statement is invalid. *)
 
 val bind_names : stmt -> (string * Data.t) list -> Rc.t
@@ -720,7 +721,7 @@ val bind_names : stmt -> (string * Data.t) list -> Rc.t
 
     @return the return code of the first binding that fails, or [Rc.OK].
 
-    @raise Not_found if a [name] does not exist.
+    Raises [Not_found] if a [name] does not exist.
     @raise SqliteError if the statement is invalid. *)
 
 val bind_parameter_count : stmt -> int
@@ -743,7 +744,7 @@ val bind_parameter_index : stmt -> string -> int
     @return
       the position of the free variable with name [name] in statement [stmt].
 
-    @raise Not_found if [name] was not found.
+    Raises [Not_found] if [name] was not found.
     @raise SqliteError if the statement is invalid. *)
 
 val clear_bindings : stmt -> Rc.t
