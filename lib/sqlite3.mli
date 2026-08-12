@@ -205,18 +205,21 @@ module Data : sig
   (** [to_int_exn data] converts [INT] [data] to an int.
 
       @raise DataTypeError if [data] is invalid.
+
       Raises [Failure] if the integer conversion over- or underflows. *)
 
   val to_nativeint_exn : t -> nativeint
   (** [to_nativeint_exn data] converts [INT] [data] to a nativeint.
 
       @raise DataTypeError if [data] is invalid.
+
       Raises [Failure] if the integer conversion over- or underflows. *)
 
   val to_int32_exn : t -> int32
   (** [to_int32_exn data] converts [INT] [data] to an int32.
 
       @raise DataTypeError if [data] is invalid.
+
       Raises [Failure] if the integer conversion over- or underflows. *)
 
   val to_int64_exn : t -> int64
@@ -334,8 +337,7 @@ val ( let& ) : db -> (db -> 'a) -> 'a
     exception somewhere in the scope.
 
     Raises [Fun.Finally_raised] if the database could not be closed
-    successfully.
-*)
+    successfully. *)
 
 val enable_load_extension : db -> bool -> bool
 (** [enable_load_extension db onoff] enable/disable the SQLite3 load extension.
@@ -539,6 +541,7 @@ val column_int : stmt -> int -> int
       as an [int].
 
     @raise RangeError if [n] is out of range.
+
     Raises [Failure] if the integer conversion over- or underflows.
     @raise SqliteError if the statement is invalid. *)
 
@@ -549,6 +552,7 @@ val column_nativeint : stmt -> int -> nativeint
       as a [nativeint].
 
     @raise RangeError if [n] is out of range.
+
     Raises [Failure] if the integer conversion over- or underflows.
     @raise SqliteError if the statement is invalid. *)
 
